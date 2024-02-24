@@ -1,12 +1,12 @@
-// App.jsx
 import React, { useState } from 'react';
 import Comment from './comment';
 import CommentForm from './commentForm';
+import './App.css';
 
 // Initial comments array
-// const initialComments = [
-//   // Initial comments array...
-// ];
+const initialComments = [
+  // Initial comments array...
+];
 
 function App() {
   const [comments, setComments] = useState(initialComments);
@@ -54,6 +54,19 @@ function App() {
     setComments(updatedComments);
   };
 
+  const handleStar = (id) => {
+    const updatedComments = comments.map(comment => {
+      if (comment.id === id) {
+        return {
+          ...comment,
+          starred: !comment.starred // Toggle the starred status
+        };
+      }
+      return comment;
+    });
+    setComments(updatedComments);
+  };
+
   const handleSortChange = (event) => {
     setSortBy(event.target.value);
   };
@@ -76,7 +89,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>YouTube Comment Section Clone</h1>
+      <h1>Comment Section</h1>
       <div className="sort-options">
         <label>
           Sort by:
@@ -97,7 +110,7 @@ function App() {
       </div>
       <div className="comments">
         {sortedComments.map(comment => (
-          <Comment key={comment.id} comment={comment} onReply={handleReply} onDelete={deleteComment} onLike={handleLike} />
+          <Comment key={comment.id} comment={comment} onReply={handleReply} onDelete={deleteComment} onLike={handleLike} onStar={handleStar} />
         ))}
       </div>
       <CommentForm addComment={addComment} replyTo={replyTo} />

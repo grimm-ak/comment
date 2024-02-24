@@ -1,9 +1,9 @@
-// Comment.jsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faReply, faTrash, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import './comment.css';
 
-function Comment({ comment, onReply, onDelete, onLike }) {
+function Comment({ comment, onReply, onDelete, onLike, onStar }) {
   const { id, text, likes, user, starred, replies } = comment;
 
   const handleReply = () => {
@@ -11,17 +11,21 @@ function Comment({ comment, onReply, onDelete, onLike }) {
   };
 
   const handleDelete = () => {
-    onDelete(id); // Call the onDelete function with the comment id
+    onDelete(id);
   };
 
   const handleLike = () => {
-    onLike(id); // Call the onLike function with the comment id
+    onLike(id);
+  };
+
+  const handleStar = () => {
+    onStar(id);
   };
 
   return (
     <div className="comment">
       <div>
-        <FontAwesomeIcon icon={faStar} className={starred ? "starred" : ""} />
+        <FontAwesomeIcon icon={faStar} className={starred ? "starred" : ""} onClick={handleStar} />
         <p>{text}</p>
       </div>
       <p>User: {user}</p>
