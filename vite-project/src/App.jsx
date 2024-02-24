@@ -4,35 +4,9 @@ import Comment from './comment';
 import CommentForm from './commentForm';
 
 // Initial comments array
-const initialComments = [
-  { 
-    id: 1, 
-    text: "This is the first comment!", 
-    likes: 5, 
-    timestamp: new Date(), 
-    user: "User1", 
-    starred: false,
-    replies: []
-  },
-  { 
-    id: 2, 
-    text: "Nice video!", 
-    likes: 10, 
-    timestamp: new Date(), 
-    user: "User2", 
-    starred: false,
-    replies: []
-  },
-  { 
-    id: 3, 
-    text: "I learned a lot, thanks!", 
-    likes: 3, 
-    timestamp: new Date(), 
-    user: "User3", 
-    starred: false,
-    replies: []
-  }
-];
+// const initialComments = [
+//   // Initial comments array...
+// ];
 
 function App() {
   const [comments, setComments] = useState(initialComments);
@@ -64,6 +38,19 @@ function App() {
 
   const deleteComment = (id) => {
     const updatedComments = comments.filter(comment => comment.id !== id);
+    setComments(updatedComments);
+  };
+
+  const handleLike = (id) => {
+    const updatedComments = comments.map(comment => {
+      if (comment.id === id) {
+        return {
+          ...comment,
+          likes: comment.likes + 1
+        };
+      }
+      return comment;
+    });
     setComments(updatedComments);
   };
 
@@ -110,7 +97,7 @@ function App() {
       </div>
       <div className="comments">
         {sortedComments.map(comment => (
-          <Comment key={comment.id} comment={comment} onReply={handleReply} onDelete={deleteComment} />
+          <Comment key={comment.id} comment={comment} onReply={handleReply} onDelete={deleteComment} onLike={handleLike} />
         ))}
       </div>
       <CommentForm addComment={addComment} replyTo={replyTo} />
